@@ -1,0 +1,23 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        \App\Models\User::factory(4)->create();
+        \App\Models\Kategori::factory(2)->create();
+        \App\Models\Produk::factory(2)->create();
+        $this->call([
+            OrderSeeder::class
+        ]);
+    }
+}
