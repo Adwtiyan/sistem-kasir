@@ -102,14 +102,10 @@
                 <div class="form-group">
                     <div class="input-group input-group-merge input-group-alternative mb-3">
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-box"></i></span>
+                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                       </div>
-                      <select class="form-select" aria-label=".form-select" name="id_produk">
-                          <option value="" selected>Pilih Produk</option>
-                          @foreach ($produks as $produk)
-                          <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
-                          @endforeach
-                      </select>
+                      <label for="Tanggal" :value="__('Tanggal Pemesanan')"/>
+                      <input id="Tanggal" class="form-control" placeholder="Tanggal" type="date" name="tanggal" value="{{date('Y-m-d')}}" disabled>
                     </div>
                   </div>
                 <div class="form-group">
@@ -117,12 +113,12 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-box"></i></span>
                       </div>
-                      <select class="form-select" aria-label=".form-select-sm example" name="id_kategori">
-                        <option value="" selected>Pilih Kategori</option>
-                        @foreach ($kategoris as $kategori)
-                        <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
-                        @endforeach
-                    </select>
+                      <select class="form-select" aria-label=".form-select" name="id_produk">
+                          <option value="" selected>Pilih Produk</option>
+                          @foreach ($list as $produk)
+                          <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
+                          @endforeach
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -130,10 +126,10 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-box"></i></span>
                       </div>
-                      <select class="form-select" aria-label=".form-select" name="id_produk">
-                          <option value="" selected>Harga</option>
-                          @foreach ($produks as $produk)
-                          <option value="{{ $produk->id }}">{{ $produk->harga }}</option>
+                      <select class="form-select" aria-label=".form-select" name="id_kategori">
+                          <option value="" selected>Pilih Kategori</option>
+                          @foreach ($list as $produk)
+                          <option value="{{ $produk->kategori }}">{{ $produk->kategori->nama_kategori }}</option>
                           @endforeach
                       </select>
                     </div>
@@ -144,7 +140,7 @@
                         <span class="input-group-text"><i class="fas fa-box"></i></span>
                       </div>
                       <label for="JumlahProduk" :value="__('Jumlah Produk')"/>
-                      <input id="JumlahProduk" class="form-control" placeholder="Jumlah Produk" type="numeric" name="jumlah" required>
+                      <input id="JumlahProduk" class="form-control" placeholder="Jumlah Produk" type="numeric" value="" name="jumlah" required>
                     </div>
                   </div>
                 <div class="text-center">

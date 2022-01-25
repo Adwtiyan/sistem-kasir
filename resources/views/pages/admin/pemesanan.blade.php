@@ -132,7 +132,7 @@
                                 class="btn btn-sm btn-warning waves-effect waves-light">Update</a>
                             <form class="d-inline"
                                 onsubmit="return confirm('Data will be Deleted, Are you sure?')"
-                                action="{{ route('admins.destroy', [$orders->id]) }}" method="POST">
+                                action="{{ route('admins.delete-pemesanan', [$orders->id]) }}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <input type="hidden" name="_method" value="DELETE">

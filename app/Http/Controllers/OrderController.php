@@ -29,11 +29,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $produk = Produk::all();
-        $kategori = Kategori::all();
+
+        $list = Produk::with('kategori')->get();
         return view('pages.pemesanan.create')->with([
-            'produks' => $produk,
-            'kategoris' => $kategori
+            'list' => $list
         ]);
     }
 
@@ -48,14 +47,22 @@ class OrderController extends Controller
         $request->validate([
             'id_kategori' => 'required',
             'id_produk' => 'required',
-            'jumlah' => 'required'
+            'jumlah' => 'required',
         ]);
+
+        $tanggal = date('Y-m-d');
+        $produk = Produk::firstWhere($request->produk);
+        $total_bayar = $request->jumlah * $produk->harga;
+
         Order::create([
             'id_kategori' => $request->id_kategori,
             'id_produk' => $request->id_produk,
             'jumlah' => $request->jumlah,
-            'total_bayar' => $request
+            'tanggal' => $tanggal,
+            'total_bayar' => $total_bayar
         ]);
+
+        return redirect()->route('admins.pemesanan-produk');
     }
 
     /**
@@ -98,8 +105,10 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($order)
     {
-        //
+        Order::destroy($order);
+
+        return redirect()->route('admins.pemesanan-produk');
     }
 }
