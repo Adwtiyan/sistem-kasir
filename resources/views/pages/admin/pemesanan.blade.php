@@ -94,19 +94,13 @@
                         <div class="col">
                           <h5 class="h3 mb-0 text-white">Pemesanan</h5>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col">
+                        <h3 class="text-white mb-0">Tanggal Nota : {{ date('Y-m-d')  }} </h3>
+                        </div>
+                        <div class="col">
                           <a class="btn btn-primary text-white" href="{{ route('admins.add-pemesanan')}}">Tambah Pesanan</a>
                       </div>
                       </div>
-                <div class="row">
-                    <div class="col-xl-8">
-                        @foreach ($order as $key =>$orders)
-                <h3 class="text-white mb-0">No Nota : {{ $orders->id }}</h3>
-                    </div>
-                    <div class="col-xl-4">
-                    <h3 class="text-white mb-0">Tanggal Nota : {{ $orders->tanggal  }} </h3>
-                    </div>
-                </div>
                 </div>
                 <div class="table-responsive">
                 <table class="table align-items-center table-dark table-flush">
@@ -122,13 +116,14 @@
                     </thead>
                     <tbody>
                         <tr>
+                            @foreach ($order as $key =>$orders)
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $orders->id_produk }}</td>
-                            <td>{{ $orders->id_kategori }}</td>
+                            <td>{{ $orders->produk->nama_produk }}</td>
+                            <td>{{ $orders->kategori->nama_kategori }}</td>
                             <td>{{ $orders->jumlah }}</td>
                             <td>{{ $orders->total_bayar }}</td>
                             <td>
-                            <a href="{{ route('admins.edit', [$orders->id]) }}"
+                            <a href="{{ route('admins.edit-pemesanan', [$orders->id]) }}"
                                 class="btn btn-sm btn-warning waves-effect waves-light">Update</a>
                             <form class="d-inline"
                                 onsubmit="return confirm('Data will be Deleted, Are you sure?')"
@@ -143,6 +138,25 @@
                         </tr>
                     @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total Bayar</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input type="text" value="{{ $bayar }}" name="transaksi" disabled class="text-white"></td>
+                            <td><form class="d-inline"
+                                onsubmit="return confirm('Data will be stored, Are you sure?')"
+                                action="{{ route('admins.store-nota') }}" method="POST">
+                                @csrf
+                                {{-- <input type="hidden" name="id_order" value="{{ $order->id }}" > --}}
+                                <input type="hidden" value="{{ $bayar }}" name="transaksi">
+                                <input type="submit" value="Bayar"
+                                    class="btn btn-sm btn-success waves-effect waves-light">
+                                </form>
+                                <a href="#" class="btn btn-info btn-sm">Batal</a></td>
+                        </tr>
+                    </tfoot>
                   </table>
                 </div>
               </div>

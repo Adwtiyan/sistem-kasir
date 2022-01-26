@@ -62,84 +62,67 @@
                   <span>Settings</span>
                 </a>
                 <a href="#!" class="dropdown-item">
-                  <i class="ni ni-calendar-grid-58"></i>
-                  <span>Activity</span>
+                <i class="ni ni-calendar-grid-58"></i>
+                <span>Activity</span>
                 </a>
                 <a href="#!" class="dropdown-item">
-                  <i class="ni ni-support-16"></i>
-                  <span>Support</span>
+                <i class="ni ni-support-16"></i>
+                <span>Support</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <input type="submit" value="Log Out" class="dropdown-item text-center text-danger text-bold fw-bold">
                 </form>
-              </div>
+            </div>
             </li>
-          </ul>
-        </div>
-      </div>
+        </ul>
     </nav>
     <!-- Header -->
     <!-- Header -->
     <div class="header bg-primary pb-6">
-      <div class="container-fluid">
+    <div class="container-fluid">
         <div class="header-body">
-          <div class="row align-items-center py-4">
+        <div class="row align-items-center py-4">
+        </div>
+        <!-- Tables -->
+        <div class="row">
+            <div class="col">
+            <div class="card bg-default shadow">
+                <div class="card-header bg-transparent border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                          <h5 class="h3 mb-0 text-white">Laporan Nota/Hari</h5>
+                        </div>
+                      </div>
+                </div>
+                <div class="table-responsive">
+                <table class="table align-items-center table-dark table-flush">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" class="sort" data-sort="name">No</th>
+                        <th scope="col" class="sort" data-sort="name">Tanggal Nota</th>
+                        <th scope="col" class="sort" data-sort="name">Jumlah Transaksi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach ($nota as $key =>$item)
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $item->tanggal }}</td>
+                            <td>{{ $item->transaksi }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Page content -->
-    <div class="container-fluid mt--6">
-        <!-- Table -->
-      <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
-          <div class="card bg-secondary border-0">
-            <div class="card-body px-lg-5 py-lg-5">
-              <form method="POST" action="{{ route('admins.store-pemesanan') }}">
-                @csrf
-                <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                      </div>
-                      <label for="Tanggal" :value="__('Tanggal Pemesanan')"/>
-                      <input id="Tanggal" class="form-control" placeholder="Tanggal" type="date" name="tanggal" value="{{date('Y-m-d')}}" disabled>
-                    </div>
-                  </div>
-                <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-box"></i></span>
-                      </div>
-                      <select class="form-select" aria-label=".form-select" name="id_produk">
-                          <option value="" selected>Pilih Produk</option>
-                          @foreach ($list as $produk)
-                          <option value="{{ $produk->id }}">{{ $produk->nama_produk }}
-                        </option>
-                          @endforeach
-                      </select>
-                      <input type="numeric" value="{{ $produk->harga }}" name="harga" hidden>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-box"></i></span>
-                      </div>
-                      <label for="JumlahProduk" :value="__('Jumlah Produk')"/>
-                      <input id="JumlahProduk" class="form-control" placeholder="Jumlah Produk" type="numeric" value="" name="jumlah" required>
-                    </div>
-                  </div>
-                <div class="text-center">
-                  <button class="btn btn-primary mt-4"> {{ __('Tambah') }}</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> <!-- end page content -->
+    </div>
   </div>
 @endsection

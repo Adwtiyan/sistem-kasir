@@ -15,7 +15,7 @@ class CreateNotasTable extends Migration
     {
         Schema::create('notas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('id_order');
+            $table->integer('transaksi');
             $table->date('tanggal');
             $table->timestamps();
         });

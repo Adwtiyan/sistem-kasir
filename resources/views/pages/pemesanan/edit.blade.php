@@ -97,8 +97,9 @@
         <div class="col-lg-6 col-md-8">
           <div class="card bg-secondary border-0">
             <div class="card-body px-lg-5 py-lg-5">
-              <form method="POST" action="{{ route('admins.store-pemesanan') }}">
+              <form method="POST" action="{{ route('admins.update-pemesanan', [$order->id]) }}">
                 @csrf
+                @method('put')
                 <div class="form-group">
                     <div class="input-group input-group-merge input-group-alternative mb-3">
                       <div class="input-group-prepend">
@@ -108,32 +109,18 @@
                       <input id="Tanggal" class="form-control" placeholder="Tanggal" type="date" name="tanggal" value="{{date('Y-m-d')}}" disabled>
                     </div>
                   </div>
-                <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-box"></i></span>
-                      </div>
-                      <select class="form-select" aria-label=".form-select" name="id_produk">
-                          <option value="" selected>Pilih Produk</option>
-                          @foreach ($list as $produk)
-                          <option value="{{ $produk->id }}">{{ $produk->nama_produk }}
-                        </option>
-                          @endforeach
-                      </select>
-                      <input type="numeric" value="{{ $produk->harga }}" name="harga" hidden>
-                    </div>
-                  </div>
                   <div class="form-group">
                     <div class="input-group input-group-merge input-group-alternative mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-box"></i></span>
                       </div>
                       <label for="JumlahProduk" :value="__('Jumlah Produk')"/>
-                      <input id="JumlahProduk" class="form-control" placeholder="Jumlah Produk" type="numeric" value="" name="jumlah" required>
+                      <input id="JumlahProduk" class="form-control" placeholder="Jumlah Produk" type="numeric" value="{{ $order->jumlah }}" name="jumlah" required>
+                      <input class="form-control" type="numeric" value="{{ $order->produk->harga }}" name="harga" hidden>
                     </div>
                   </div>
                 <div class="text-center">
-                  <button class="btn btn-primary mt-4"> {{ __('Tambah') }}</button>
+                  <button class="btn btn-primary mt-4"> {{ __('Ubah') }}</button>
                 </div>
               </form>
             </div>

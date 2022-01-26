@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\nota;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class NotaController extends Controller
@@ -14,7 +15,10 @@ class NotaController extends Controller
      */
     public function index()
     {
-        //
+        $nota = nota::all();
+        return view('pages.admin.report')->with([
+            'nota' => $nota
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class NotaController extends Controller
      */
     public function create()
     {
-        //
+      return redirect()->route('admins.pemesanan-produk');
     }
 
     /**
@@ -35,7 +39,20 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = Order::all();
+      foreach($order as $key){
+        Order::destroy($key->id);
+      }
+        $request->validate([
+            'transaksi' => 'required'
+        ]);
+        $tanggal = date('Y-m-d');
+        nota::create([
+            'tanggal' => $tanggal,
+            'transaksi' => $request->transaksi
+        ]);
+
+        return redirect()->route('admins.pemesanan-produk');
     }
 
     /**

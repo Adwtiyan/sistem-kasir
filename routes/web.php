@@ -52,7 +52,14 @@ Route::prefix('admins')
         Route::get('/pemesanan', [OrderController::class, 'index'])->name('admins.pemesanan-produk');
         Route::get('/pemesanan-add', [OrderController::class, 'create'])->name('admins.add-pemesanan');
         Route::post('/pemesanan-add', [OrderController::class, 'store'])->name('admins.store-pemesanan');
+        Route::get('/pemesanan-edit/{id}', [OrderController::class, 'edit'])->name('admins.edit-pemesanan');
+        Route::put('/pemesanan-edit/{id}', [OrderController::class, 'update'])->name('admins.update-pemesanan');
         Route::delete('/pemesanan-delete/{id}', [OrderController::class, 'destroy'])->name('admins.delete-pemesanan');
+        Route::post('/pemesanan-bayar', [NotaController::class, 'store'])->name('admins.store-nota');
+            //Nota
+        Route::get('/report', [NotaController::class, 'index'])->name('admins.laporan-nota');
+        Route::get('/new-nota', [NotaController::class, 'create'])->name('admins.new-nota');
+        Route::get('/report-detail', [NotaController::class, 'show'])->name('admins.detail-nota');
             //Show Data User
         Route::get('/user-admin', [AdminController::class, 'show'])->name('admins.show-admin');
         Route::get('/user-supplier', [SupplierController::class, 'show'])->name('admins.show-supplier');

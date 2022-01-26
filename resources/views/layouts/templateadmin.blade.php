@@ -35,7 +35,8 @@
         ADMIN || LIST KATEGORI
         @elseif (Request::path() === 'admins/produk')
         ADMIN || LIST PRODUK
-        @else
+        @elseif (Request::path() === 'admins/report')
+        ADMIN || Laporan Nota
         @endif
   </title>
   <!-- Favicon -->
@@ -74,7 +75,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::path() === 'admins/pemesanan' ? 'active' : '' }}" href="{{ route('admins.pemesanan-produk')}}">
                     <i class="fas fa-sort-amount-up-alt"></i>
-                  <span class="nav-link-text">Pemesanan</span>
+                  <span class="nav-link-text">Transaksi</span>
                 </a>
               </li>
             <li class="nav-item">
@@ -108,7 +109,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ Request::path() === 'admins/report' ? 'active' : '' }}" href="{{ route('admins.show-produk')}}">
+                <a class="nav-link {{ Request::path() === 'admins/report' ? 'active' : '' }}" href="{{ route('admins.laporan-nota')}}">
                     <i class="fas fa-list text-warning"></i>
                   <span class="nav-link-text">Reports</span>
                 </a>

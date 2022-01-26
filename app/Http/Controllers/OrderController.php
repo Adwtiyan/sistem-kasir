@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Kategori;
 use App\Models\Produk;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -16,9 +16,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::with('produk')->get();
+        $orders = Order::with('produk', 'kategori')->get();
+        $bayar = $orders->sum->total_bayar;
         return view('pages.admin.pemesanan')->with([
-            'order' => $order
+            'order' => $orders,
+            'bayar' => $bayar
         ]);
     }
 
@@ -30,9 +32,11 @@ class OrderController extends Controller
     public function create()
     {
 
-        $list = Produk::with('kategori')->get();
+        $list1 = Kategori::all();
+        $list = Produk::all();
         return view('pages.pemesanan.create')->with([
-            'list' => $list
+            'list' => $list,
+            'list1' => $list1
         ]);
     }
 
@@ -45,17 +49,16 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_kategori' => 'required',
             'id_produk' => 'required',
             'jumlah' => 'required',
         ]);
 
         $tanggal = date('Y-m-d');
-        $produk = Produk::firstWhere($request->produk);
-        $total_bayar = $request->jumlah * $produk->harga;
+        $produk = Produk::firstWhere($request->id);
+        $total_bayar = $request->jumlah * $request->harga;
 
         Order::create([
-            'id_kategori' => $request->id_kategori,
+            'id_kategori' => $produk->id_kategori,
             'id_produk' => $request->id_produk,
             'jumlah' => $request->jumlah,
             'tanggal' => $tanggal,
@@ -82,9 +85,12 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($order)
     {
-        //
+        $order = Order::firstWhere('id', $order);
+        return view('pages.pemesanan.edit')->with([
+            'order' => $order
+        ]);
     }
 
     /**
@@ -94,9 +100,18 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $order)
     {
-        //
+        $request->validate([
+            'jumlah' => 'required'
+        ]);
+        $bayaran = $request->jumlah * $request->harga;
+        Order::with('Produk')->where('id', $order)->update([
+        'jumlah' => $request->jumlah,
+        'total_bayar' => $bayaran
+        ]);
+
+        return redirect()->route('admins.pemesanan-produk');
     }
 
     /**
